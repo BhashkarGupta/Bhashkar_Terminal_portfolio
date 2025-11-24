@@ -230,7 +230,7 @@ const AboutView = ({ cardBg, accentColor }: { cardBg: string, accentColor: strin
     <AnimatedBlock delay={2400}>
       <div className={`p-6`}>
         <p className="leading-relaxed mb-4">
-          > When I’m not resolving system issues or studying for my Master's, you can find me cycling, running, or exploring VR gaming.
+          When I’m not resolving system issues or studying for my Master's, you can find me cycling, running, or exploring VR gaming.
         </p>
       </div>
     </AnimatedBlock>
