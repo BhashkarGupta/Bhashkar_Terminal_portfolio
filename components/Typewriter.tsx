@@ -18,48 +18,49 @@ export const Typewriter: React.FC<TypewriterProps> = ({
   onComplete,
   className = "" 
 }) => {
-  const [displayedText, setDisplayedText] = useState('');
-  const [hasStarted, setHasStarted] = useState(false);
+  const [currentLength, setCurrentLength] = useState(0);
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
-    let intervalId: ReturnType<typeof setInterval> | undefined;
-    let charIndex = 0;
+    // Reset state when text changes
+    setCurrentLength(0);
 
-    const startTyping = () => {
-      setHasStarted(true);
+    let timeoutId: ReturnType<typeof setTimeout>;
+    let intervalId: ReturnType<typeof setInterval>;
+
+    const run = () => {
       intervalId = setInterval(() => {
-        if (charIndex < text.length) {
-          setDisplayedText(prev => prev + text.charAt(charIndex));
-          charIndex++;
-        } else {
+        setCurrentLength(prev => {
+          if (prev < text.length) {
+            return prev + 1;
+          }
           clearInterval(intervalId);
-          if (onComplete) onComplete();
-        }
+          return prev;
+        });
       }, speed);
     };
 
     if (startDelay > 0) {
-      timeoutId = setTimeout(startTyping, startDelay);
+      timeoutId = setTimeout(run, startDelay);
     } else {
-      startTyping();
+      run();
     }
 
     return () => {
       clearTimeout(timeoutId);
-      if (intervalId) clearInterval(intervalId);
+      clearInterval(intervalId);
     };
-  }, [text, speed, startDelay, onComplete]);
+  }, [text, speed, startDelay]);
 
-  // Reset if text changes significantly
+  // Handle completion side-effect separately to keep render logic pure
   useEffect(() => {
-      setDisplayedText('');
-      setHasStarted(false);
-  }, [text]);
+    if (currentLength === text.length && text.length > 0 && onComplete) {
+       onComplete();
+    }
+  }, [currentLength, text.length, onComplete]);
 
   return (
     <span className={className}>
-      {displayedText}
+      {text.slice(0, currentLength)}
       {showCursor && <span className="animate-cursor-blink ml-1 inline-block w-2 h-4 bg-current align-middle"></span>}
     </span>
   );

@@ -160,7 +160,7 @@ const HomeView = ({ accentColor }: { accentColor: string }) => (
       </h1>
       <div className="text-xl md:text-2xl opacity-90 mb-6">
         <AnimatedBlock delay={1500}>
-          System Administrator | Blue Team Aspirant | OS Developer
+          System Administrator | Blue Team Aspirant | Free Time Coder
         </AnimatedBlock>
       </div>
       <div className="text-lg opacity-70 border-l-4 border-current pl-4 italic">
