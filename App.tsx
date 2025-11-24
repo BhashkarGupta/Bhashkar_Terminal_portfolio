@@ -4,11 +4,15 @@ import { Layout } from './components/Layout';
 import { BootSequence } from './components/BootSequence';
 import { ShellMode, ThemeMode } from './types';
 
+export type ViewType = 'home' | 'about' | 'experience' | 'projects' | 'skills' | 'contact';
+
 interface AppContextType {
   shellMode: ShellMode;
   themeMode: ThemeMode;
+  activeView: ViewType;
   toggleShell: () => void;
   toggleTheme: () => void;
+  setActiveView: (view: ViewType) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -23,6 +27,7 @@ export const useAppContext = () => {
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [activeView, setActiveView] = useState<ViewType>('home');
 
   // Initialize Shell Mode based on OS
   const [shellMode, setShellMode] = useState<ShellMode>(() => {
@@ -68,7 +73,7 @@ export default function App() {
   }, [themeMode]);
 
   return (
-    <AppContext.Provider value={{ shellMode, themeMode, toggleShell, toggleTheme }}>
+    <AppContext.Provider value={{ shellMode, themeMode, toggleShell, toggleTheme, activeView, setActiveView }}>
       {isLoading ? (
         <BootSequence shellMode={shellMode} onComplete={() => setIsLoading(false)} />
       ) : (
