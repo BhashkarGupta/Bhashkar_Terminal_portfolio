@@ -126,14 +126,14 @@ const NextScriptPrompt = ({ nextView, isBash, isDark, onExecute }: { nextView: V
 const CommandBar = ({ activeView, isBash, isDark, accentColor }: any) => {
   // Map views to commands
   const commands: Record<ViewType, { bash: string; ps: string }> = {
-    home: { bash: './init.sh', ps: 'Start-Process -FilePath ./init.ps1' },
+    home: { bash: './init.sh', ps: 'Start-Process -FilePath .\\init.ps1' },
     about: { bash: 'cat ./whoami.txt', ps: 'Get-Content .\\WhoAmI.txt' },
     experience: { bash: './history.sh | grep "Work"', ps: 'Get-History | Select-String "Work"' },
     projects: { bash: 'ls -la ./repos', ps: 'Get-ChildItem .\\Repos' },
     certifications: { bash: 'apt list --installed | grep "security\\|admin"', ps: 'Get-Package | Where-Object { $_.Name -match "Security|Admin" }' },
     skills: { bash: 'printenv | grep SKILLS', ps: 'Get-Variable -Name Skills' },
     contact: { bash: './contact.sh --message', ps: 'Send-MailMessage -To "Me"' },
-    resume: { bash: 'wget ./resume.pdf', ps: 'Invoke-WebRequest -Uri ./resume.pdf -OutFile Resume.pdf' },
+    resume: { bash: 'wget ./resume.pdf', ps: 'Invoke-WebRequest -Uri .\\resume.pdf -OutFile Resume.pdf' },
   };
 
   const currentCmd = isBash ? commands[activeView].bash : commands[activeView].ps;
