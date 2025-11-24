@@ -4,7 +4,7 @@ import { Layout } from './components/Layout';
 import { BootSequence } from './components/BootSequence';
 import { ShellMode, ThemeMode } from './types';
 
-export type ViewType = 'home' | 'about' | 'experience' | 'projects' | 'skills' | 'contact';
+export type ViewType = 'home' | 'about' | 'experience' | 'projects' | 'certifications' | 'skills' | 'contact' | 'resume';
 
 interface AppContextType {
   shellMode: ShellMode;
