@@ -19,13 +19,17 @@ export const BootSequence: React.FC<BootSequenceProps> = ({ shellMode, onComplet
     let currentIndex = 0;
     
     const interval = setInterval(() => {
+      // Defensive check: ensure we don't exceed bounds
       if (currentIndex >= sourceLogs.length) {
         clearInterval(interval);
         setTimeout(onComplete, 800); // Small delay after logs finish before hiding
         return;
       }
 
-      setLogs(prev => [...prev, sourceLogs[currentIndex]]);
+      const nextLog = sourceLogs[currentIndex];
+      if (nextLog) {
+          setLogs(prev => [...prev, nextLog]);
+      }
       currentIndex++;
 
       // Auto scroll to bottom
@@ -63,19 +67,20 @@ export const BootSequence: React.FC<BootSequenceProps> = ({ shellMode, onComplet
           <div key={index} className="mb-1">
              {isBash ? (
                <span className="flex gap-2">
-                 {log.startsWith('[ OK ]') ? (
+                 {/* Defensive check: log must be defined */}
+                 {log && log.startsWith('[ OK ]') ? (
                     <>
                       <span className="text-green-500 font-bold">[ OK ]</span>
                       <span>{log.replace('[ OK ]', '').trim()}</span>
                     </>
                  ) : (
-                   <span className="opacity-80 ml-1">{log}</span>
+                   <span className="opacity-80 ml-1">{log || ''}</span>
                  )}
                </span>
              ) : (
                <span className="flex gap-2">
                  <span className="text-yellow-400">{'>'}</span>
-                 <span>{log}</span>
+                 <span>{log || ''}</span>
                </span>
              )}
           </div>
