@@ -799,16 +799,28 @@ const ResumeView = ({ cardBg, accentColor, isBash, isDark }: any) => {
   useEffect(() => {
     // Reset progress when mounted
     setProgress(0);
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 2; // Speed of "download"
-      });
-    }, 30);
-    return () => clearInterval(interval);
+    let interval: ReturnType<typeof setInterval>;
+    
+    // Delay start to match the fade-in animation of the progress bar container (1500ms)
+    // We add 100ms extra buffer to be safe.
+    const startTimeout = setTimeout(() => {
+        interval = setInterval(() => {
+            setProgress(prev => {
+                if (prev >= 100) {
+                    clearInterval(interval);
+                    return 100;
+                }
+                // Slower speed: +1 every 30ms.
+                // 100 steps * 30ms = 3000ms (3 seconds) duration.
+                return prev + 1; 
+            });
+        }, 30);
+    }, 1600);
+
+    return () => {
+        clearTimeout(startTimeout);
+        if (interval) clearInterval(interval);
+    };
   }, []);
 
   const resumeUrl = "https://1drv.ms/b/c/78735145e282b672/IQAblf7IEE6PS71X302VeZW3ATjFGnu_KRgj8VQ5DHkbGpU?e=adbA3p";

@@ -35,10 +35,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, borderColor
   };
 
   const currentWidth = isCollapsed ? 60 : width;
+  
+  // Safe calculation for style width to avoid SSR/Initial render issues on mobile
+  const sidebarStyle = {
+    width: isOpen ? '16rem' : ((typeof window !== 'undefined' && window.innerWidth >= 768) ? `${currentWidth}px` : '16rem')
+  };
 
   return (
     <aside 
-      style={{ width: isOpen ? '16rem' : (window.innerWidth >= 768 ? `${currentWidth}px` : '16rem') }}
+      style={sidebarStyle}
       className={`
         fixed inset-y-0 left-0 z-40 transform transition-[width,transform] duration-300 ease-in-out
         md:relative md:translate-x-0 border-r ${borderColor} ${bgColor}

@@ -76,7 +76,7 @@ export const Layout: React.FC = () => {
   }, [activeView]);
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${bgColor} ${textColor} flex flex-col md:flex-row overflow-hidden font-mono select-none md:select-auto`}>
+    <div className={`h-screen transition-colors duration-300 ${bgColor} ${textColor} flex flex-col md:flex-row overflow-hidden font-mono select-none md:select-auto`}>
       
       {/* Top Bar (Mobile) / Header Strip (Desktop) */}
       <div className={`md:hidden p-4 border-b ${borderColor} flex justify-between items-center sticky top-0 z-50 ${bgColor}`}>
@@ -109,7 +109,7 @@ export const Layout: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col h-screen overflow-hidden relative">
+      <main className="flex-1 flex flex-col h-full overflow-hidden relative">
         {/* IDE Toolbar / Status Bar */}
         <header className={`h-14 border-b ${borderColor} flex items-center justify-between px-6 shrink-0 bg-opacity-90 backdrop-blur-sm z-40`}>
           <div className="hidden md:flex items-center gap-4 text-sm opacity-80">
